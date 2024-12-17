@@ -5,7 +5,7 @@ import '../screens/intro/view/intro_screen.dart';
 import '../screens/search/view/search_screen.dart';
 
 class AppRoutes {
-  static const String initialRoute = '/home';
+  static const String initialRoute = '/';
   static const String introPage = '/intro';
   static const String searchPage = '/search';
 

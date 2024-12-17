@@ -1,13 +1,13 @@
 class WeatherModel {
   int? visibility;
-  String? Name, cod;
+  String? name, cod;
   List<WeatherListModel>? weathers = [];
   sysModel? sys;
   MainModel? mainModels;
 
   WeatherModel(
       {this.visibility,
-      this.Name,
+      this.name,
       this.weathers,
       this.sys,
       this.mainModels,
@@ -17,7 +17,7 @@ class WeatherModel {
     List weather = m1['weather'];
     return WeatherModel(
       visibility: m1['visibility'],
-      Name: m1['name'],
+      name: m1['name'],
       sys: sysModel.mapToModel(m1['sys']),
       mainModels: MainModel.mapToModel(m1['main']),
       weathers: weather

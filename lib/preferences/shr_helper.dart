@@ -3,7 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class ShrHelper {
   static const String bookmarkedCity = "bookmarkedCity";
 
-  Future<void> saveBookmarkedCity(String city) async {
+  Future<void> setBookmarkedCity(String city) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString(bookmarkedCity, city);
   }

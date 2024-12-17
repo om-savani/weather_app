@@ -10,12 +10,10 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-  DataProvider read = DataProvider();
-  DataProvider watch = DataProvider();
   @override
   Widget build(BuildContext context) {
-    read = context.read<DataProvider>();
-    watch = context.watch<DataProvider>();
+    final read = context.read<DataProvider>();
+    final watch = context.watch<DataProvider>();
 
     return Scaffold(
       appBar: AppBar(
@@ -41,20 +39,16 @@ class _SearchScreenState extends State<SearchScreen> {
           : Column(
               children: [
                 ListTile(
-                  title: Text("${watch.weatherModel!.Name}"),
+                  title: Text("${watch.weatherModel!.name}"),
                   subtitle: Text(
                       "${(watch.weatherModel!.mainModels!.temp! - 273.15).toStringAsFixed(1)}°C"),
                   trailing: IconButton(
                     icon: const Icon(Icons.bookmark_add_outlined),
                     onPressed: () async {
-                      await read.bookmarkCity(watch.weatherModel!.Name!);
-                      print(
-                          "Bookmarked City==========: ${watch.bookmarkedCity}");
-                      print(
-                          "Bookmarked City==========: ${watch.weatherModel!.Name}");
-                      print("Bookmarked City==========: ${watch.cityName}");
-                      print(
-                          "Bookmarked City==========: ${watch.weatherModel!.cod}");
+                      await read.bookmarkCity(watch.weatherModel!.name!);
+                      read.saveCity(watch.cityName);
+                      print("Bookmarked City: ${watch.bookmarkedCity}");
+                      watch.changeBgImage();
                       Navigator.pop(context);
                     },
                   ),
