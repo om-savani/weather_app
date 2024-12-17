@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:weather_app/preferences/shr_helper.dart'; // Import ShrHelper
+import 'package:weather_app/preferences/shr_helper.dart';
 import '../../../helper/api_helper.dart';
 import '../../../model/weather_model.dart';
 
@@ -9,67 +8,52 @@ class DataProvider with ChangeNotifier {
   String cityName = "Surat";
   WeatherModel? weatherModel = WeatherModel();
   String? bookmarkedCity;
-  ShrHelper helper = ShrHelper(); // ShrHelper instance for SharedPreferences
+  ShrHelper helper = ShrHelper();
 
   DataProvider() {
-    loadBookmarkedCity(); // Load bookmarked city when the provider is created
+    loadBookmarkedCity();
   }
 
-  // Check if it's the first time the user opens the app
-  Future<bool> checkFirstTime() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getString('selectedCity') ==
-        null; // No city saved means it's the first time
-  }
-
-  // Save the selected city
-  Future<void> saveCity(String city) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString('selectedCity', city);
-    cityName = city;
+  bool get isFirstTime {
+    return bookmarkedCity == null;
     notifyListeners();
   }
 
-  // Fetch weather data for the current city
-  Future<void> WeatherData() async {
+  Future<void> WeatherData(String city) async {
     ApiHelper apiHelper = ApiHelper();
     weatherModel = await apiHelper.getWeatherData(cityName);
 
     if (weatherModel != null && weatherModel!.cod == "200") {
-      weatherList =
-          weatherModel!.weathers!; // Update the weatherList if data is valid
+      weatherList = weatherModel!.weathers!;
     } else {
-      weatherList = []; // If no valid data, reset the list
+      weatherList = [];
     }
     notifyListeners();
   }
 
-  // Change the city for weather data
   void changeCity(String city) {
     cityName = city;
-    notifyListeners(); // Notify listeners about the change
+    notifyListeners();
   }
 
-  // Bookmark the city and store it in SharedPreferences
   Future<void> bookmarkCity(String city) async {
     cityName = city;
     bookmarkedCity = city;
-    await helper.saveBookmarkedCity(city); // Save the city using ShrHelper
-    notifyListeners(); // Notify listeners that the city has been bookmarked
+    await helper.saveBookmarkedCity(city);
+
+    await WeatherData(city);
+    notifyListeners();
   }
 
-  // Load the bookmarked city from SharedPreferences
   Future<void> loadBookmarkedCity() async {
-    bookmarkedCity = await helper
-        .getBookmarkedCity(); // Get the bookmarked city from ShrHelper
+    bookmarkedCity = await helper.getBookmarkedCity();
     if (bookmarkedCity != null) {
-      cityName =
-          bookmarkedCity!; // Set the cityName to the bookmarked city if available
+      cityName = bookmarkedCity!;
     }
-    await WeatherData(); // Fetch weather data for the bookmarked city
+    await WeatherData(cityName);
+    notifyListeners();
   }
 
-  // Get the appropriate weather icon based on the weather description
   String getWeatherIcon(String? weather) {
     switch (weather?.toLowerCase()) {
       case "clear":

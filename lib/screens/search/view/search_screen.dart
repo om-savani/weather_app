@@ -31,7 +31,7 @@ class _SearchScreenState extends State<SearchScreen> {
             hintText: 'Search City',
             onSubmitted: (value) {
               read.changeCity(value);
-              read.WeatherData();
+              read.WeatherData(value);
             },
           ),
         ),
@@ -48,6 +48,13 @@ class _SearchScreenState extends State<SearchScreen> {
                     icon: const Icon(Icons.bookmark_add_outlined),
                     onPressed: () async {
                       await read.bookmarkCity(watch.weatherModel!.Name!);
+                      print(
+                          "Bookmarked City==========: ${watch.bookmarkedCity}");
+                      print(
+                          "Bookmarked City==========: ${watch.weatherModel!.Name}");
+                      print("Bookmarked City==========: ${watch.cityName}");
+                      print(
+                          "Bookmarked City==========: ${watch.weatherModel!.cod}");
                       Navigator.pop(context);
                     },
                   ),

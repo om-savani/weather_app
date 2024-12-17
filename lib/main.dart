@@ -3,40 +3,36 @@ import 'package:provider/provider.dart';
 import 'package:weather_app/routes/app_routes.dart';
 import 'package:weather_app/screens/home/view/home_screen.dart';
 import 'package:weather_app/screens/home/provider/data_provider.dart';
-import 'package:weather_app/screens/intro/view/intro_screen.dart';
+import 'package:weather_app/screens/intro/view/intro_screen.dart'; // Import the first screen
 
 void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider.value(value: DataProvider()),
       ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        routes: AppRoutes.routes,
-        // home: FutureBuilder(
-        //   future: context
-        //       .read<DataProvider>()
-        //       .checkFirstTime(), // Check if it's the first time
-        //   builder: (context, snapshot) {
-        //     if (snapshot.connectionState == ConnectionState.waiting) {
-        //       return const Center(child: CircularProgressIndicator());
-        //     }
-        //
-        //     if (snapshot.data == true) {
-        //       return const FirstScreen(); // Show first screen if no city is selected
-        //     } else {
-        //       return const HomeScreen(); // Show home screen if a city is selected
-        //     }
-        //   },
-        // ),
+      child: Consumer<DataProvider>(
+        builder: (BuildContext context, value, Widget? child) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            routes: AppRoutes.routes,
+            home: value.isFirstTime == true
+                ? const IntroScreen()
+                : const HomeScreen(),
+          );
+        },
       ),
     );
   }

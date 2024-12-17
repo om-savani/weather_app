@@ -31,8 +31,7 @@ class IntroScreen extends StatelessWidget {
                 border: OutlineInputBorder(),
               ),
               onSubmitted: (city) async {
-                await dataProvider
-                    .saveCity(city); // Save city in SharedPreferences
+                await dataProvider.bookmarkCity(city);
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => const HomeScreen()),
