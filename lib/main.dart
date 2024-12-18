@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_app/routes/app_routes.dart';
-import 'package:weather_app/screens/home/view/home_screen.dart';
 import 'package:weather_app/screens/home/provider/data_provider.dart';
-import 'package:weather_app/screens/intro/view/intro_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -25,7 +23,6 @@ class _MyAppState extends State<MyApp> {
       ],
       child: Consumer<DataProvider>(
         builder: (BuildContext context, value, Widget? child) {
-          value.getCity();
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             routes: AppRoutes.routes,

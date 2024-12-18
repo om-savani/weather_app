@@ -18,8 +18,13 @@ class ShrHelper {
     await prefs.remove(bookmarkedCity);
   }
 
-  Future<bool> isFirstTime() async {
+  Future<void> isFirstTime() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getBool('isFirstTime') ?? true;
+    await prefs.setBool("isFirstTime", false);
+  }
+
+  Future<bool> getIsFirstTime() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getBool("isFirstTime") ?? true;
   }
 }

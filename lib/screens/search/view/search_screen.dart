@@ -10,10 +10,13 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
+  late DataProvider read;
+  late DataProvider watch;
+  late String cityName;
   @override
   Widget build(BuildContext context) {
-    final read = context.read<DataProvider>();
-    final watch = context.watch<DataProvider>();
+    read = context.read<DataProvider>();
+    watch = context.watch<DataProvider>();
 
     return Scaffold(
       appBar: AppBar(
@@ -28,27 +31,27 @@ class _SearchScreenState extends State<SearchScreen> {
             leading: const Icon(Icons.search),
             hintText: 'Search City',
             onSubmitted: (value) {
-              read.changeCity(value);
-              read.WeatherData(value);
+              cityName = value;
+              read.getSearchData(value);
             },
           ),
         ),
       ),
-      body: watch.weatherModel == null || watch.weatherModel!.cod == "404"
+      body: watch.searchWeatherModel == null ||
+              watch.searchWeatherModel!.cod == "404"
           ? const Center(child: Text("City Not Found"))
           : Column(
               children: [
                 ListTile(
-                  title: Text("${watch.weatherModel!.name}"),
+                  title: Text("${watch.searchWeatherModel!.name}"),
                   subtitle: Text(
-                      "${(watch.weatherModel!.mainModels!.temp! - 273.15).toStringAsFixed(1)}°C"),
+                      "${(watch.searchWeatherModel?.mainModels?.temp ?? 0 - 273.15).toStringAsFixed(1)}°C"),
                   trailing: IconButton(
                     icon: const Icon(Icons.bookmark_add_outlined),
                     onPressed: () async {
-                      await read.bookmarkCity(watch.weatherModel!.name!);
-                      read.saveCity(watch.cityName);
-                      print("Bookmarked City: ${watch.bookmarkedCity}");
-                      watch.changeBgImage();
+                      read.saveCity(cityName);
+                      read.getWeatherData();
+                      read.changeBgImage();
                       Navigator.pop(context);
                     },
                   ),
