@@ -36,7 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
             IconButton(
               onPressed: () =>
                   Navigator.pushNamed(context, AppRoutes.searchPage),
-              icon: const Icon(Icons.search),
+              icon: const Icon(Icons.search, color: Colors.white),
             ),
           ],
         ),
@@ -62,9 +62,8 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Stack(
         children: [
           Positioned.fill(
-            child: Image.network(
-              watch.weatherImage ??
-                  "https://thumbs.dreamstime.com/b/tree-alone-green-meadow-sunset-110209913.jpg",
+            child: Image.asset(
+              watch.weatherImage ?? "lib/assets/images/default.webp",
               fit: BoxFit.cover,
             ),
           ),

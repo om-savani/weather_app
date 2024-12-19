@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../screens/home/view/home_screen.dart';
 import '../screens/intro/view/intro_screen.dart';
 import '../screens/search/view/search_screen.dart';
-import '../splash/view/splash_screen.dart';
+import '../screens/splash/view/splash_screen.dart';
 
 class AppRoutes {
   static const String splash = '/';

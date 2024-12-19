@@ -31,8 +31,8 @@ class _IntroScreenState extends State<IntroScreen> {
       body: Stack(
         children: [
           Positioned.fill(
-            child: Image.network(
-              'https://cdn.suwalls.com/wallpapers/abstract/blurry-circles-26566-1920x1080.jpg',
+            child: Image.asset(
+              'lib/assets/images/intro.jpg',
               fit: BoxFit.cover,
             ),
           ),

@@ -2,7 +2,7 @@ class WeatherModel {
   int? visibility;
   String? name, cod;
   List<WeatherListModel>? weathers = [];
-  sysModel? sys;
+  SysModel? sys;
   MainModel? mainModels;
 
   WeatherModel(
@@ -18,7 +18,7 @@ class WeatherModel {
     return WeatherModel(
       visibility: m1['visibility'],
       name: m1['name'],
-      sys: sysModel.mapToModel(m1['sys']),
+      sys: SysModel.mapToModel(m1['sys']),
       mainModels: MainModel.mapToModel(m1['main']),
       weathers: weather
           .map(
@@ -44,7 +44,7 @@ class WeatherListModel {
 
 class MainModel {
   double? temp, feelsLike, tempMin, tempMax;
-  int? pressure, huminity, seaLevel, grndLevel;
+  int? pressure, humidity, seaLevel, grndLevel;
 
   MainModel(
       {this.temp,
@@ -52,7 +52,7 @@ class MainModel {
       this.tempMin,
       this.tempMax,
       this.pressure,
-      this.huminity,
+      this.humidity,
       this.seaLevel,
       this.grndLevel});
 
@@ -63,19 +63,19 @@ class MainModel {
       tempMin: m1['temp_min'],
       tempMax: m1['temp_max'],
       pressure: m1['pressure'],
-      huminity: m1['humidity'],
+      humidity: m1['humidity'],
       seaLevel: m1['sea_level'],
       grndLevel: m1['grnd_level'],
     );
   }
 }
 
-class sysModel {
+class SysModel {
   String? country;
 
-  sysModel({this.country});
+  SysModel({this.country});
 
-  factory sysModel.mapToModel(Map m1) {
-    return sysModel(country: m1['country']);
+  factory SysModel.mapToModel(Map m1) {
+    return SysModel(country: m1['country']);
   }
 }

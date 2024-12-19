@@ -23,6 +23,7 @@ class _MyAppState extends State<MyApp> {
       ],
       child: Consumer<DataProvider>(
         builder: (BuildContext context, value, Widget? child) {
+          value.getWeatherData().then((value) {});
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             routes: AppRoutes.routes,
